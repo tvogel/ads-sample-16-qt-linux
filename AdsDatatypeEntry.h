@@ -15,7 +15,6 @@
 #pragma once
 
 #include <cstdint>
-#include <QDebug>
 
 #pragma  pack( push, 1)
 
@@ -113,19 +112,10 @@ struct AdsDatatypeEntry
   {
     return reinterpret_cast<const AdsDatatypeEntry *>(reinterpret_cast<const char *>(ArrayInfo()) + arrayDim * sizeof(AdsDatatypeArrayInfo));
   }
-  QJsonObject toJson() const;
+  class QJsonObject toJson() const;
 };
 
-__inline AdsDatatypeEntry * AdsDatatypeStructItem(AdsDatatypeEntry * p, unsigned short iItem)
-{
-  uint16_t i;
-  AdsDatatypeEntry * pItem;
-  if ( iItem >= p->subItems )
-  return NULL;
-  pItem = (AdsDatatypeEntry *)(((unsigned char*)(p+1))+p->nameLength+p->typeLength+p->commentLength+3+p->arrayDim*sizeof(AdsDatatypeArrayInfo));
-  for ( i=0; i < iItem; i++ )
-  pItem = (AdsDatatypeEntry *)(((unsigned char*)pItem)+pItem->entryLength);
-  return pItem;
-}
+AdsDatatypeEntry * AdsDatatypeStructItem(AdsDatatypeEntry * p,
+                                         unsigned short iItem);
 
 #pragma  pack( pop )

@@ -122,3 +122,17 @@ QJsonObject AdsDatatypeEntry::toJson() const
 
   return jsonObject;
 }
+
+AdsDatatypeEntry * AdsDatatypeStructItem(AdsDatatypeEntry * p,
+                                         unsigned short iItem) {
+  uint16_t i;
+  AdsDatatypeEntry * pItem;
+  if (iItem >= p->subItems)
+    return 0;
+  pItem = (AdsDatatypeEntry *)(((unsigned char *)(p + 1)) + p->nameLength +
+                               p->typeLength + p->commentLength + 3 +
+                               p->arrayDim * sizeof(AdsDatatypeArrayInfo));
+  for (i = 0; i < iItem; i++)
+    pItem = (AdsDatatypeEntry *)(((unsigned char *)pItem) + pItem->entryLength);
+  return pItem;
+}

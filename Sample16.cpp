@@ -3,6 +3,7 @@
 
 #include "Sample16Dlg.h"
 #include <QApplication>
+#include <cstdint>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -16,7 +17,7 @@ int main(int argc, char *argv[])
 
   QString targetIp = app.arguments().value(1, qgetenv("ADS_TARGET_IP"));
   AmsNetId targetNetId = AmsNetId(app.arguments().value(2, qgetenv("ADS_TARGET_NETID")).toStdString());
-  quint16 targetPort = app.arguments().value(3, qgetenv("ADS_TARGET_PORT")).toUShort();
+  uint16_t targetPort = app.arguments().value(3, qgetenv("ADS_TARGET_PORT")).toUShort();
 
   if (!targetNetId)
   {

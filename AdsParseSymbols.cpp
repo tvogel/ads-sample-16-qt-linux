@@ -14,7 +14,7 @@ CAdsParseSymbols::CAdsParseSymbols(void *  pSymbols, unsigned int nSymSize, void
 {
   memset(m_bufGetTypeByNameBuffer, 0, sizeof(m_bufGetTypeByNameBuffer));
   m_pSymbols = new char[nSymSize+sizeof(uint32_t)];
-	QJsonArray typeList;
+  QJsonArray typeList;
 
   if ( m_pSymbols )
   {
@@ -72,14 +72,10 @@ CAdsParseSymbols::CAdsParseSymbols(void *  pSymbols, unsigned int nSymSize, void
 
 CAdsParseSymbols::~CAdsParseSymbols()
 {
-  if ( m_pSymbols )
-    delete m_pSymbols;
-  if ( m_pDatatypes )
-    delete m_pDatatypes;
-  if ( m_ppSymbolArray )
-    delete m_ppSymbolArray;
-  if ( m_ppDatatypeArray )
-    delete m_ppDatatypeArray;
+  delete m_pSymbols;
+  delete m_pDatatypes;
+  delete m_ppSymbolArray;
+  delete m_ppDatatypeArray;
 }
 
 CAdsParseSymbols * CAdsParseSymbols::fromCache()

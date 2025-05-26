@@ -16,12 +16,12 @@ typedef enum ADSGETDYNSYMBOLTYPE
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct
 {
-  quint32    nSymbols;
-  quint32    nSymSize;
-  quint32    nDatatypes;
-  quint32    nDatatypeSize;
-  quint32    nMaxDynSymbols;
-  quint32    nUsedDynSymbols;
+  uint32_t    nSymbols;
+  uint32_t    nSymSize;
+  uint32_t    nDatatypes;
+  uint32_t    nDatatypeSize;
+  uint32_t    nMaxDynSymbols;
+  uint32_t    nUsedDynSymbols;
 } AdsSymbolUploadInfo2, *PAdsSymbolUploadInfo2;
 
 
@@ -31,7 +31,7 @@ typedef struct
 /////////////////////////////////////////////////////////////////////////////
 // CSample16Dlg dialog
 
-CSample16Dlg::CSample16Dlg(const char * targetIp, const AmsNetId & targetNetId, quint16 targetPort, QWidget * parent)
+CSample16Dlg::CSample16Dlg(const char * targetIp, const AmsNetId & targetNetId, uint16_t targetPort, QWidget * parent)
     : QDialog(parent),
       m_adsDevice(targetIp, targetNetId, targetPort),
       m_strName(""),
@@ -67,7 +67,7 @@ CSample16Dlg::~CSample16Dlg()
 
 void CSample16Dlg::onButtonLoad()
 {
-    long nErr = adsSetFirstDynSymbol(true);
+    uint32_t nErr = adsSetFirstDynSymbol(true);
     if (nErr != ADSERR_NOERR)
     {
         QMessageBox::critical(this, "Error", QString("Failed to load dynamic symbols (error = 0x%1).").arg(nErr, 0, 16));
@@ -94,9 +94,9 @@ void CSample16Dlg::onButtonNext()
     handleNavigation(ADSDYNSYM_GET_NEXT, "Failed to get next");
 }
 
-void CSample16Dlg::handleNavigation(long navType, const QString& errorMessage)
+void CSample16Dlg::handleNavigation(uint32_t navType, const QString& errorMessage)
 {
-    long nErr = adsGetNextDynSymbol(navType, m_strName, m_strFullName, m_strType, m_strComment, m_nAdsType,
+    uint32_t nErr = adsGetNextDynSymbol(navType, m_strName, m_strFullName, m_strType, m_strComment, m_nAdsType,
                                     m_nSize, m_nIndexGroup, m_nIndexOffset);
 
     if (nErr == ADSERR_NOERR)
@@ -129,9 +129,9 @@ bool CSample16Dlg::initDialog()
   return true;  // return true  unless you set the focus to a control
 }
 
-long CSample16Dlg::adsSetFirstDynSymbol(bool bForceReload)
+uint32_t CSample16Dlg::adsSetFirstDynSymbol(bool bForceReload)
 {
-  long nResult=ADSERR_NOERR;
+  uint32_t nResult=ADSERR_NOERR;
 
   if ( bForceReload )
   {
@@ -199,12 +199,12 @@ long CSample16Dlg::adsSetFirstDynSymbol(bool bForceReload)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-long CSample16Dlg::adsGetNextDynSymbol(long navType, QString &strName, QString &strFullName,
-                            QString &strType, QString &strComment, long &adsType,
-                            long &cbSymbolSize, long &nIndexGroup, long &nIndexOffset)
+uint32_t CSample16Dlg::adsGetNextDynSymbol(uint32_t navType, QString & strName, QString & strFullName,
+                            QString & strType, QString & strComment, uint32_t & adsType,
+                            uint32_t & cbSymbolSize, uint32_t & nIndexGroup, uint32_t & nIndexOffset)
 {
-  long nResult      = ADSERR_NOERR;
-  long internalNayType = navType;
+  uint32_t nResult      = ADSERR_NOERR;
+  uint32_t internalNayType = navType;
 
   if ( navType == ADSDYNSYM_GET_NEXT )
     internalNayType = m_nNextNavType;

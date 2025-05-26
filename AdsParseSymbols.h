@@ -3,22 +3,22 @@
 #include "AdsLib.h"
 #include "AdsDatatypeEntry.h"
 #include <QString>
+#include <cstdint>
 
 class CAdsSymbolInfo
 {
 public:
-  CAdsSymbolInfo() : m_pEntry(NULL) {};
-  quint32 iGrp;     //
-  quint32 iOffs;    //
-  quint32 size;     // size of datatype ( in bytes )
-  quint32 offs;     // offs of dataitem in parent datatype ( in bytes )
-  quint32 dataType; // adsDataType of symbol (if alias)
-  quint32 flags;    //
+  uint32_t iGrp;     //
+  uint32_t iOffs;    //
+  uint32_t size;     // size of datatype ( in bytes )
+  uint32_t offs;     // offs of dataitem in parent datatype ( in bytes )
+  uint32_t dataType; // adsDataType of symbol (if alias)
+  uint32_t flags;    //
   QString name;
   QString fullname;
   QString type;
   QString comment;
-  AdsDatatypeEntry *  m_pEntry;
+  AdsDatatypeEntry * m_pEntry = 0;
 };
 
 class CAdsParseSymbols
@@ -72,7 +72,7 @@ private:
     return SymbolType(p) + p->typeLength + 1;
   }
   static const AdsSymbolEntry * NextSymbolEntry(const AdsSymbolEntry * pEntry) {
-    return *reinterpret_cast<const quint32 *>(reinterpret_cast<const char *>(pEntry) + pEntry->entryLength)
+    return *reinterpret_cast<const uint32_t *>(reinterpret_cast<const char *>(pEntry) + pEntry->entryLength)
       ? reinterpret_cast<const AdsSymbolEntry *>(reinterpret_cast<const char *>(pEntry) + pEntry->entryLength)
       : nullptr;
   }
